@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'detail_fruit_screen.dart';
+import 'upload_photo_screen.dart';
+import '../../config/api_config.dart';
 
 // ===== Figma style constants =====
 const kPink = Color(0xFFC7007D);
@@ -49,6 +51,39 @@ class _StoreDetailScreenState extends State<StoreDetailScreen> {
             children: [_ProductGrid(), _ReviewsPlaceholder()],
           ),
         ),
+        bottomNavigationBar: SafeArea(
+          top: false,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+            child: SizedBox(
+              height: 48,
+              width: double.infinity,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFFC6007E),
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  elevation: 0,
+                ),
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => UploadPhotoScreen(
+                        apiBase: ApiConfig.currentBaseUrl,
+                      ),
+                    ),
+                  );
+                },
+                child: const Text(
+                  '수정하기',
+                  style: TextStyle(fontWeight: FontWeight.w800, fontSize: 16),
+                ),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -72,12 +107,15 @@ class _StoreDetailScreenState extends State<StoreDetailScreen> {
             child: Stack(
               fit: StackFit.expand,
               children: [
-                Image.network(
-                  widget.heroImageUrl,
-                  fit: BoxFit.cover,
-                  errorBuilder: (_, __, ___) =>
-                      Container(color: Colors.grey[200]),
-                ),
+                // Use asset if path starts with assets/, else try network
+                widget.heroImageUrl.startsWith('assets/')
+                    ? Image.asset(widget.heroImageUrl, fit: BoxFit.cover)
+                    : Image.network(
+                        widget.heroImageUrl,
+                        fit: BoxFit.cover,
+                        errorBuilder: (_, __, ___) =>
+                            Container(color: Colors.grey[200]),
+                      ),
                 Positioned(
                   left: 10,
                   top: 10,
@@ -521,7 +559,7 @@ class _ProductGrid extends StatelessWidget {
       ),
       _P(
         '씨없는 포도',
-        'https://images.unsplash.com/photo-1506806732259-39c2d0268443?w=800',
+        'assets/img/fruit/strawberry.jpg',
         3500,
         7000,
         0.9,
@@ -537,6 +575,7 @@ class _ProductGrid extends StatelessWidget {
   전화 문의: 010-9876-5432
   상품 설명:
   “씨가 없어 먹기 편리한 캠벨 포도입니다. 진한 향과 달콤한 맛으로 아이들 간식이나 디저트용으로 제격입니다.”''',
+        isAsset: true,
       ),
     ];
 

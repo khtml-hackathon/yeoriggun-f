@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'home_sangin_screen.dart';
 
 class AddResultSangin extends StatefulWidget {
   const AddResultSangin({super.key});

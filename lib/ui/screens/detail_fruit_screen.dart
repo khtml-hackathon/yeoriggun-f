@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 import 'order_screen.dart'; // ✅ 주문 완료 화면 import
+import '../../routes/app_routes.dart';
 
-/// ===== Design tokens =====
-const kPink = Color(0xFFC7007D);
-const kPurple = Color(0xFF94338F);
+/// ===== Figma tokens (MCP) =====
+const kSurfacePrimary = Color(0xFFFFFDFB); // surface/surface-primary: #fffdfb
+const kSurfaceSecondary = Color(0xFFC6007E); // surface/surface-secondary: #c6007e
+const kTextPrimary = Color(0xFF281D1B); // text/text-primary: #281d1b
+const kTextTertiary = Color(0x9E757575); // text/text-tertiary: #7575759e
+const kBorderPrimary = Color(0x80B0B0B0); // border/border-primary: #b0b0b080
+const kRadius = 18.0; // radius: 18
+const kMarginH = 16.0; // margin_horizontal: 16
+const kMarginTop = 50.0; // marigin_top: 50
 
 const kFigmaGradient = LinearGradient(
   colors: [Color(0xFFC6007E), Color(0xFF93328E)],
@@ -38,27 +45,44 @@ class DetailFruitScreen extends StatelessWidget {
         .clamp(0.0, 1.0);
 
     return Scaffold(
-      backgroundColor: const Color(0xFFFFFDFB),
+      backgroundColor: kSurfacePrimary,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        foregroundColor: const Color(0xFF281D1B),
+        toolbarHeight: kMarginTop,
+        centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 20, color: kSurfaceSecondary),
+          onPressed: () => Navigator.of(context).maybePop(),
+          tooltip: '뒤로',
+        ),
+        title: const Text(
+          '상품',
+          style: TextStyle(
+            color: kTextPrimary,
+            fontWeight: FontWeight.w800,
+            fontSize: 32,
+            letterSpacing: -0.64,
+          ),
+        ),
       ),
 
       // ===== 본문 =====
       body: SingleChildScrollView(
-        padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
+        padding: const EdgeInsets.fromLTRB(kMarginH, 0, kMarginH, 24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // 상단 이미지
+            // 상단 이미지 (height: 250, radius: 18)
             ClipRRect(
-              borderRadius: BorderRadius.circular(16),
-              child: Stack(
-                children: [
-                  AspectRatio(
-                    aspectRatio: 16 / 11,
-                    child: isAsset
+              borderRadius: BorderRadius.circular(kRadius),
+              child: SizedBox(
+                height: 250,
+                width: double.infinity,
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    isAsset
                         ? Image.asset(image, fit: BoxFit.cover)
                         : Image.network(
                             image,
@@ -66,41 +90,37 @@ class DetailFruitScreen extends StatelessWidget {
                             errorBuilder: (_, __, ___) =>
                                 Container(color: Colors.grey[200]),
                           ),
-                  ),
-                  Positioned(
-                    right: 10,
-                    top: 10,
-                    child: Container(
-                      width: 34,
-                      height: 34,
-                      decoration: const BoxDecoration(
-                        color: Color(0x8C0E0D0D),
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Icon(
-                        Icons.favorite_border,
-                        color: Colors.white,
+                    // Left circular back button over image
+                    Positioned(
+                      left: 9,
+                      top: 9,
+                      child: _CircleIconButton(
+                        icon: Icons.arrow_back_ios_new_rounded,
+                        onTap: () => Navigator.of(context).maybePop(),
                       ),
                     ),
-                  ),
-                ],
+                    // Right circular like button over image
+                    Positioned(
+                      right: 9,
+                      top: 9,
+                      child: _CircleIconButton(
+                        icon: Icons.favorite_border,
+                        onTap: () {},
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             const SizedBox(height: 14),
 
             // 타이틀 & 가격 카드
             Container(
-              padding: const EdgeInsets.all(14),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.06),
-                    blurRadius: 10,
-                    offset: const Offset(0, 6),
-                  ),
-                ],
+                borderRadius: BorderRadius.circular(kRadius),
+                border: Border.all(color: kBorderPrimary),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -109,12 +129,13 @@ class DetailFruitScreen extends StatelessWidget {
                   Text(
                     name,
                     style: const TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.w900,
-                      letterSpacing: -0.3,
+                      fontSize: 30,
+                      fontWeight: FontWeight.w800,
+                      letterSpacing: -0.75,
+                      color: kTextPrimary,
                     ),
                   ),
-                  const SizedBox(height: 6),
+                  const SizedBox(height: 4),
                   // 현재가 + (할인율/원가) 같은 라인
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -122,9 +143,9 @@ class DetailFruitScreen extends StatelessWidget {
                       Text(
                         _won(priceNow),
                         style: const TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.w800,
-                          color: Color(0xFF1A281B),
+                          fontSize: 30,
+                          fontWeight: FontWeight.w600,
+                          color: kTextPrimary,
                         ),
                       ),
                       const SizedBox(width: 8),
@@ -132,8 +153,8 @@ class DetailFruitScreen extends StatelessWidget {
                         Text(
                           '${(discount * 100).round()}%',
                           style: const TextStyle(
-                            color: kPurple,
-                            fontSize: 16,
+                            color: kSurfaceSecondary,
+                            fontSize: 18,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
@@ -141,8 +162,8 @@ class DetailFruitScreen extends StatelessWidget {
                         Text(
                           _won(priceOrigin),
                           style: const TextStyle(
-                            color: Color(0x9E132E15),
-                            fontSize: 16,
+                            color: kTextTertiary,
+                            fontSize: 18,
                             decoration: TextDecoration.lineThrough,
                           ),
                         ),
@@ -156,19 +177,26 @@ class DetailFruitScreen extends StatelessWidget {
             const SizedBox(height: 8),
 
             // 상세설명 박스
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: const Color(0xFFF0F0F0)),
+            SizedBox(
+              width: double.infinity,
+              height: 200,
+              child: Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(kRadius),
+                  border: Border.all(color: kBorderPrimary),
+                ),
+                child: description.isNotEmpty
+                    ? SingleChildScrollView(child: _SpecBox(description: description))
+                    : const Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          '상품 설명이 준비중입니다.',
+                          style: TextStyle(fontSize: 16, height: 1.4),
+                        ),
+                      ),
               ),
-              child: description.isNotEmpty
-                  ? _SpecBox(description: description)
-                  : const Text(
-                      '상품 설명이 준비중입니다.',
-                      style: TextStyle(fontSize: 13, height: 1.4),
-                    ),
             ),
 
             // footer와 겹치지 않도록 여유
@@ -181,8 +209,8 @@ class DetailFruitScreen extends StatelessWidget {
       bottomNavigationBar: SafeArea(
         top: false,
         child: Container(
-          height: 70,
-          margin: const EdgeInsets.fromLTRB(12, 0, 12, 12),
+          height: 74,
+          margin: const EdgeInsets.fromLTRB(16, 0, 16, 12),
           decoration: ShapeDecoration(
             color: const Color(0x3393328E),
             shape: RoundedRectangleBorder(
@@ -195,43 +223,33 @@ class DetailFruitScreen extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // 장바구니
+                // 장바구니 → 업로드(플로우 시작)
                 SizedBox(
-                  width: 150,
-                  height: 45,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      gradient: kFigmaGradient,
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(
-                        color: Colors.white.withOpacity(0.6),
-                        width: 2,
+                  width: 158.7,
+                  height: 44,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(AppRoutes.upload);
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: kSurfaceSecondary,
+                      foregroundColor: kSurfacePrimary,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Color(0x3F000000),
-                          blurRadius: 4,
-                          offset: Offset(0, 4),
-                        ),
-                      ],
+                      elevation: 0,
                     ),
-                    child: const Center(
-                      child: Text(
-                        '장바구니',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
+                    child: const Text(
+                      '사진 업로드',
+                      style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
                     ),
                   ),
                 ),
                 const SizedBox(width: 12),
-
-                // 바로 구매하기 (onTap 추가됨 ✅)
+                // 바로 구매하기 (기존 유지)
                 SizedBox(
-                  width: 150,
-                  height: 45,
+                  width: 158.7,
+                  height: 44,
                   child: Material(
                     color:
                         Colors.transparent, // ✅ InkWell이 제대로 동작하도록 Material 추가
@@ -249,26 +267,20 @@ class DetailFruitScreen extends StatelessWidget {
                       },
                       child: Container(
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: kSurfacePrimary,
                           border: Border.all(
                             color: const Color(0x33C6007E),
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(10),
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Color(0x3F000000),
-                              blurRadius: 4,
-                              offset: Offset(0, 4),
-                            ),
-                          ],
                         ),
                         child: const Center(
                           child: Text(
                             '바로 구매하기',
                             style: TextStyle(
-                              color: Color(0xFFC6007E),
+                              color: kSurfaceSecondary,
                               fontWeight: FontWeight.w700,
+                              fontSize: 15,
                             ),
                           ),
                         ),
@@ -280,6 +292,30 @@ class DetailFruitScreen extends StatelessWidget {
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+/// Circular icon button used on top of the product image (matches Figma)
+class _CircleIconButton extends StatelessWidget {
+  const _CircleIconButton({required this.icon, required this.onTap});
+  final IconData icon;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 34,
+        height: 34,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          shape: BoxShape.circle,
+          border: Border.all(color: kBorderPrimary),
+        ),
+        child: Icon(icon, size: 18, color: kTextPrimary),
       ),
     );
   }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'home_screen.dart';
 import 'home_sangin_screen.dart';
+import '../../config/api_config.dart';
+import 'upload_photo_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

@@ -10,11 +10,11 @@
 		</data>
 		<key>flutter_assets/AssetManifest.bin</key>
 		<data>
-		B1/dmCweWPRGcU6UPSOya0MLJ34=
+		hFFZCmqZRu6nMpuAxIvxHJ0KH7U=
 		</data>
 		<key>flutter_assets/AssetManifest.json</key>
 		<data>
-		AgjQ6Bw58tEob30xM61q8ZNWm18=
+		oLn9c3c5mHwA1Kdkjf2gF7MrikQ=
 		</data>
 		<key>flutter_assets/FontManifest.json</key>
 		<data>
@@ -22,7 +22,7 @@
 		</data>
 		<key>flutter_assets/NOTICES.Z</key>
 		<data>
-		xXyMrdk/izmOs+0/IFzF77C3u2Q=
+		pBkiH4Zba4ZcoDo326pe5NgXqt4=
 		</data>
 		<key>flutter_assets/NativeAssetsManifest.json</key>
 		<data>
@@ -126,11 +126,19 @@
 		</data>
 		<key>flutter_assets/kernel_blob.bin</key>
 		<data>
-		JKJrifHeHjdg1Gq2GXy9G5B+O6I=
+		gkSK//ZiKmiNhC8JmHqdzs1a38c=
 		</data>
 		<key>flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
 		<data>
 		Bvk+P1ykE1PGRdktwgwDyz6AOqM=
+		</data>
+		<key>flutter_assets/packages/record_web/assets/js/record.fixwebmduration.js</key>
+		<data>
+		jdOHZCknGz0mLf/bJm5RUxN05CI=
+		</data>
+		<key>flutter_assets/packages/record_web/assets/js/record.worklet.js</key>
+		<data>
+		S0P6GRHlkQuSLkbFpQTo+KW/TgE=
 		</data>
 		<key>flutter_assets/shaders/ink_sparkle.frag</key>
 		<data>
@@ -147,14 +155,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			pq1CD8Z7dIpCYpjnEb/1rUhrBaHv/N5ACN4L1LuxUtM=
+			OsafJczJqsupgU9ivBsh3CmUfjSP6NXjfme+hSGm7Ng=
 			</data>
 		</dict>
 		<key>flutter_assets/AssetManifest.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			dO3nkr4gid5Obvic/Vi/C8dBB1hToLICqjNg/6U9NtY=
+			jEnlap1rp48zyhYiyWaiq59boVMUKmrM09arUCclB2o=
 			</data>
 		</dict>
 		<key>flutter_assets/FontManifest.json</key>
@@ -168,7 +176,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			yiq19Nf9IUV+X6z9JviatjUMrTD6JlTZWQfoVzexQYc=
+			ntPPFq3lRDw7bdDXIKzgaCT241qXNpkoa3fsyXoKKgM=
 			</data>
 		</dict>
 		<key>flutter_assets/NativeAssetsManifest.json</key>
@@ -343,7 +351,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			QhGUTd1OPxfw/CxxR8D63MTYXsgB1zbk7q0+xc2dp68=
+			mYAqodWMP0ygJRAFdML9PUfE41gDbWSz8OF6Nrrc+bs=
 			</data>
 		</dict>
 		<key>flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
@@ -351,6 +359,20 @@
 			<key>hash2</key>
 			<data>
 			Z8RP6Rg7AC553ef2l34piGYcmj5KPF/OloeH79vtgjw=
+			</data>
+		</dict>
+		<key>flutter_assets/packages/record_web/assets/js/record.fixwebmduration.js</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			w0WtXS//s1etpke5tpBpNFKiABvFkS8ekGaHbOAWOZs=
+			</data>
+		</dict>
+		<key>flutter_assets/packages/record_web/assets/js/record.worklet.js</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			un4PTIQUgO54wLVOfq3URFW5Fv79sHQQ7kYVnYLcwI4=
 			</data>
 		</dict>
 		<key>flutter_assets/shaders/ink_sparkle.frag</key>
