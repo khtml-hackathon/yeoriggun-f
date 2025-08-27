@@ -9,9 +9,7 @@ import '../state/session_state.dart';
 import 'result_screen.dart';
 
 class RecordAudioScreen extends StatefulWidget {
-  const RecordAudioScreen({super.key, required this.apiBase});
-
-  final String apiBase;
+  const RecordAudioScreen({super.key});
 
   @override
   State<RecordAudioScreen> createState() => _RecordAudioScreenState();
@@ -45,18 +43,30 @@ class _RecordAudioScreenState extends State<RecordAudioScreen> {
 
   Future<void> _callStt() async {
     final audio = _audioFile ?? context.read<SessionState>().recordedAudio;
-    if (audio == null) { setState(() { _error = '오디오가 없습니다.'; }); return; }
-    setState(() { _loading = true; _error = null; });
+    if (audio == null) { 
+      setState(() { _error = '오디오가 없습니다.'; }); 
+      return; 
+    }
+    
+    setState(() { 
+      _loading = true; 
+      _error = null; 
+    });
+    
     try {
-      final api = ApiClient(widget.apiBase);
+      final api = ApiClient();
       final res = await api.sttSummarize(audio);
       context.read<SessionState>().setSttResult(res);
+      
       if (!mounted) return;
+      
       Navigator.of(context).push(
-        MaterialPageRoute(builder: (_) => ResultScreen()),
+        MaterialPageRoute(builder: (_) => const ResultScreen()),
       );
     } catch (e) {
-      setState(() { _error = e.toString(); });
+      setState(() { 
+        _error = e.toString().replaceAll('ApiException: ', '');
+      });
     } finally {
       if (mounted) setState(() { _loading = false; });
     }
@@ -84,7 +94,26 @@ class _RecordAudioScreenState extends State<RecordAudioScreen> {
             ),
             if (_error != null) ...[
               const SizedBox(height: 12),
-              Text(_error!, style: const TextStyle(color: Colors.red)),
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Colors.red.shade50,
+                  border: Border.all(color: Colors.red.shade200),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Row(
+                  children: [
+                    Icon(Icons.error, color: Colors.red.shade600),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        _error!,
+                        style: TextStyle(color: Colors.red.shade700),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ],
         ),
