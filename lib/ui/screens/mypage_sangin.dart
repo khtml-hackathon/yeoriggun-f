@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'add_sangin.dart';
+import '../widgets/sangin_bottom_nav.dart';
 
 class MyPageSangin extends StatefulWidget {
   const MyPageSangin({super.key});
@@ -187,8 +189,8 @@ class _MyPageSanginState extends State<MyPageSangin> {
       ),
 
       // 하단 네비게이터 4개 (디자인만 반영)
-       bottomNavigationBar: SanginBottomNav(
-        current: SanginTab.mypage,   // ✅ 현재 탭을 지정
+      bottomNavigationBar: BottomNavBar(
+        currentTab: SanginTab.mypage,   // ✅ 현재 탭을 지정
         onTap: (tab) {
           // TODO: 탭 이동 로직
           switch (tab) {

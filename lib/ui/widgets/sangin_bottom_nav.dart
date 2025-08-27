@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 // 각 화면 import
-import 'home_sangin_screen.dart';
-import 'order_sangin.dart';
-import 'chat_sangin.dart';
-import 'mypage_sangin.dart';
+import '../screens/home_sangin_screen.dart';
+import '../screens/order_sangin.dart';
+import '../screens/chat_sangin.dart';
+import '../screens/mypage_sangin.dart';
 import 'local_svg_icon.dart'; // LocalSvgIcon 위젯 경로에 맞게 수정하세요
 
 /// 탭 enum 정의
